@@ -1,0 +1,44 @@
+###
+POST http://localhost:8080/api/faculty/
+Content-Type: application/json
+
+{
+  "name": "Griffindore",
+  "color": "red"
+}
+
+###
+POST http://localhost:8080/api/faculty
+Content-Type: application/json
+
+{
+  "name": "Slytherin",
+  "color": "green"
+}
+
+###
+POST http://localhost:8080/api/faculty
+Content-Type: application/json
+
+{
+  "name": "Ravenclaw",
+  "color": "blue"
+}
+
+###
+POST http://localhost:8080/api/faculty
+Content-Type: application/json
+
+{
+  "name": "Hufflepuff",
+  "color": "yellow"
+}
+
+###
+PUT http://localhost:8080/api/faculty
+
+###
+GET http://localhost:8080/api/faculty?colour=green
+
+###
+GET http://localhost:8080/api/faculty
