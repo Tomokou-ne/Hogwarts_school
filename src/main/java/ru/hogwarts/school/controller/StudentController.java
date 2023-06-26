@@ -5,38 +5,46 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/student")
 public class StudentController {
-    private final StudentService StudentService;
+    private final StudentService studentService;
 
-    public StudentController(StudentService StudentService) {
-        this.StudentService = StudentService;
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
 
     @GetMapping()
     public Collection<Student> getAllFaculties() {
-        return this.StudentService.getAllStudents();
+        return studentService.getAllStudents();
     }
 
     @GetMapping("{id}")
     public Student getStudent(@PathVariable Integer id) {
-        return this.StudentService.getStudentById(id);
+        return studentService.getStudentById(id);
+    }
+
+    @GetMapping("{age}")
+    public Map<Long, Student> getStudentsByAge(@PathVariable("age") int age) {
+        return this.studentService.getStudentsByAge(age);
     }
 
     @PostMapping()
     public Student addStudent(@RequestBody Student Student) {
-        return this.StudentService.addStudent(Student);
+        return studentService.addStudent(Student);
     }
 
     @PutMapping("/{id}")
     public Student updateStudent(@PathVariable("id") long id, @RequestBody Student Student) {
-        return StudentService.updateStudent(id, Student);
+        return studentService.updateStudent(id, Student);
     }
 
     @DeleteMapping("/{id}")
     public Student removeStudent(@PathVariable("id") long id) {
-        return StudentService.removeStudent(id);
+        return studentService.removeStudent(id);
     }
+
+
 }

@@ -41,4 +41,26 @@ PUT http://localhost:8080/api/faculty
 GET http://localhost:8080/api/faculty?colour=green
 
 ###
-GET http://localhost:8080/api/faculty
+DELETE http://localhost:8080/api/faculty?id=2
+
+###
+POST http://localhost:8080/api/student/
+Content-Type: application/json
+
+{
+  "name": "Harry",
+  "age": 11
+}
+
+###
+POST http://localhost:8080/api/faculty
+Content-Type: application/json
+
+{
+  "name": "Ron",
+  "age": 11
+}
+
+###
+GET http://localhost:8080/api/student/1
+

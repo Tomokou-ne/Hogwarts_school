@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.HouseService;
 
 import java.util.Collection;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/faculty")
@@ -18,17 +19,22 @@ public class HouseController {
 
     @GetMapping()
     public Collection<Faculty> getAllFaculties() {
-        return this.houseService.getAllFaculties();
+        return houseService.getAllFaculties();
     }
 
     @GetMapping("{id}")
     public Faculty getFaculty(@PathVariable Integer id) {
-        return this.houseService.getFacultyById(id);
+        return houseService.getFacultyById(id);
+    }
+
+    @GetMapping("{color}")
+    public Map<Long, Faculty> getFacultiesByColor(@PathVariable("color") String color) {
+        return houseService.getFacultiesByColor(color);
     }
 
     @PostMapping()
     public Faculty addFaculty(@RequestBody Faculty faculty) {
-        return this.houseService.addFaculty(faculty);
+        return houseService.addFaculty(faculty);
     }
 
     @PutMapping("/{id}")
