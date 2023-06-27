@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -27,7 +28,7 @@ public class StudentController {
     }
 
     @GetMapping("{age}")
-    public Map<Long, Student> getStudentsByAge(@PathVariable("age") int age) {
+    public List<Student> getStudentsByAge(@PathVariable("age") int age) {
         return this.studentService.getStudentsByAge(age);
     }
 

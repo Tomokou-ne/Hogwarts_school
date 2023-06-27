@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.HouseService;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -28,7 +29,7 @@ public class HouseController {
     }
 
     @GetMapping("{color}")
-    public Map<Long, Faculty> getFacultiesByColor(@PathVariable("color") String color) {
+    public List<Faculty> getFacultiesByColor(@PathVariable("color") String color) {
         return houseService.getFacultiesByColor(color);
     }
 
