@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Faculty;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -27,10 +28,7 @@ public class HouseService {
 
     //read object from hashmap
     public Faculty getFacultyById(long id) {
-        if (facultyMap.containsKey(id)) {
-            return facultyMap.get(id);
-        }
-        return null;
+        return facultyMap.get(id);
     }
 
     //delete object
@@ -50,15 +48,11 @@ public class HouseService {
     }
 
     //get faculties by color
-    public Map<Long, Faculty> getFacultiesByColor(String color) {
-        Map<Long, Faculty> total = new HashMap<Long, Faculty>();
-        long counter = 0;
-        for (Map.Entry<Long, Faculty> entry : facultyMap.entrySet()) {
-            if(entry.getValue().getColor().equals(color)) {
-                total.put(this.counter++, entry.getValue());
-            }
-        }
-        return total;
+    public List<Faculty> getFacultiesByColor(String color) {
+        return facultyMap.values()
+                .stream()
+                .filter(faculty -> faculty.getColor().equals(color))
+                .toList();
     }
 
 }

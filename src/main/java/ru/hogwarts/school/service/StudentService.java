@@ -1,11 +1,11 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -13,7 +13,7 @@ public class StudentService {
 
     private long counter = 0;
 
-    Map<Long, Student> studentMap= new HashMap<>();
+    private final Map<Long, Student> studentMap= new HashMap<>();
 
 
     //get all students
@@ -29,10 +29,7 @@ public class StudentService {
 
     //read object from hashmap
     public Student getStudentById(long id) {
-        if (studentMap.containsKey(id)) {
-            return studentMap.get(id);
-        }
-        return null;
+        return studentMap.get(id);
     }
 
     //student expulsion
@@ -52,14 +49,10 @@ public class StudentService {
     }
 
     //get students by age
-    public Map<Long, Student> getStudentsByAge(int age) {
-        Map<Long, Student> total = new HashMap<Long, Student>();
-        long counter = 0;
-        for (Map.Entry<Long, Student> entry : studentMap.entrySet()) {
-            if(entry.getValue().getAge() == age) {
-                total.put(this.counter++, entry.getValue());
-            }
-        }
-        return total;
+    public List<Student> getStudentsByAge(int age) {
+       return studentMap.values()
+               .stream()
+               .filter(student -> student.getAge() == age)
+               .toList();
     }
 }
