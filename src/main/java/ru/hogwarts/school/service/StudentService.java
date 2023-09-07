@@ -1,58 +1,53 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
-import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class StudentService {
 
     private StudentRepository studentRepository;
-    private long counter = 0;
 
-    private final Map<Long, Student> studentMap= new HashMap<>();
-
+    public StudentService(StudentRepository studentRepository) {
+        this.studentRepository = studentRepository;
+    }
 
     //get all students
     public Collection<Student> getAllStudents() {
-        return studentMap.values();
+        return studentRepository.findAll();
     }
 
     //add new student to hashmap
     public Student addStudent (Student student) {
-        studentMap.put(this.counter++, student);
-        return student;
+        return studentRepository.save(student);
     }
 
     //read object from hashmap
-    public Student getStudentById(long id) {
-        return studentMap.get(id);
+    public Optional<Student> getStudentById(long id) {
+        return studentRepository.findById(id);
     }
 
     //student expulsion
-    public Student removeStudent(long id) {
-        return studentMap.remove(id);
+    public void removeStudent(long id) {
+        studentRepository.deleteById(id);
     }
 
     //update student-information
-    public Student updateStudent(long id, Student student) {
-        if (studentMap.containsKey(id)) {
-            return studentMap.put(id, student);
+    public Student updateStudent(Student student) {
+        Optional<Student> findStudent = getStudentById(student.getId());
+        if (findStudent == null) {
+            throw new RuntimeException("Student not found");
         }
-        return null;
+        return studentRepository.save(student);
     }
 
     //get students by age
     public List<Student> getStudentsByAge(int age) {
-        return studentMap.values()
-                .stream()
-                .filter(student -> student.getAge() == age)
-                .toList();
+        return studentRepository.getAllByAge(age);
     }
 }

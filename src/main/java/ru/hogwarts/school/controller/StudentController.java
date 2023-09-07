@@ -6,7 +6,7 @@ import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
@@ -23,7 +23,7 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public Student getStudent(@PathVariable Integer id) {
+    public Optional<Student> getStudent(@PathVariable Integer id) {
         return studentService.getStudentById(id);
     }
 
@@ -38,13 +38,13 @@ public class StudentController {
     }
 
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable("id") long id, @RequestBody Student Student) {
-        return studentService.updateStudent(id, Student);
+    public Student updateStudent(@PathVariable("id") long id, @RequestBody Student student) {
+        return studentService.updateStudent(student);
     }
 
     @DeleteMapping("/{id}")
-    public Student removeStudent(@PathVariable("id") long id) {
-        return studentService.removeStudent(id);
+    public void removeStudent(@PathVariable("id") long id) {
+        studentService.removeStudent(id);
     }
 
 
