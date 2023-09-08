@@ -12,4 +12,5 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     Optional<Faculty> findById(Long id);
 
     List<Faculty> findByColor(String color);
+
 }
