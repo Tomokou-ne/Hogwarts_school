@@ -15,27 +15,22 @@ public class HouseService {
         this.facultyRepository = facultyRepository;
     }
 
-    //get all faculties
     public Collection<Faculty> getAllFaculties() {
         return facultyRepository.findAll();
     }
 
-    //add new faculty to hashmap
     public Faculty addFaculty (Faculty faculty) {
         return facultyRepository.save(faculty);
     }
 
-    //read object from hashmap
     public Optional<Faculty> getFacultyById(long id) {
         return facultyRepository.findById(id);
     }
 
-    //delete object
     public void removeFaculty(long id) {
         facultyRepository.deleteById(id);
     }
 
-    //update faculty-information
     public Faculty updateFaculty (Faculty faculty) {
         Optional<Faculty> findFaculty = getFacultyById(faculty.getId());
         if (findFaculty == null) {
@@ -44,7 +39,6 @@ public class HouseService {
         return facultyRepository.save(faculty);
     }
 
-    //get faculties by color
     public List<Faculty> getFacultiesByColor(String color) {
         return facultyRepository.findByColor(color);
     }

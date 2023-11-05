@@ -23,7 +23,7 @@ public class StudentController {
     }
 
     @GetMapping("{id}")
-    public Optional<Student> getStudent(@PathVariable Integer id) {
+    public Student getStudent(@PathVariable Integer id) {
         return studentService.getStudentById(id);
     }
 
@@ -43,7 +43,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public void removeStudent(@PathVariable("id") long id) {
+    public void removeStudent(@PathVariable("id") int id) {
         studentService.removeStudent(id);
     }
 

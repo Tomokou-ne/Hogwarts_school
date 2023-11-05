@@ -1,10 +1,18 @@
 package ru.hogwarts.school.model;
 
 import javax.persistence.*;
-import ru.hogwarts.school.model.Position;
+
+import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import java.util.Objects;
 
 @Entity
+@Data
+@Getter
+@Setter
+@RequiredArgsConstructor
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,55 +27,7 @@ public class Student {
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
 
-    public Student(Long id, String name, int age, Position position, Faculty faculty) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.position = position;
-        this.faculty = faculty;
-    }
-
-    public Student() {    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Faculty getFaculty() {
-        return faculty;
-    }
-
-    public void setFaculty(Faculty faculty) {
-        this.faculty = faculty;
-    }
+    private int avatarId;
 
     @Override
     public boolean equals(Object o) {
