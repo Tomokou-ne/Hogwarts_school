@@ -4,13 +4,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.dto.FacultyDTO;
 import ru.hogwarts.school.dto.StudentDTO;
-import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static ru.hogwarts.school.dto.StudentDTO.fromStudent;
@@ -37,7 +35,7 @@ public class StudentService {
             pageSize = 50;
         }
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
-        List<Student> students = studentRepository.findAll();
+        List<Student> students = studentRepository.findAll(pageRequest).getContent();
         List<StudentDTO> studentDTOs = new ArrayList<>();
 
         for (Student student : students) {
@@ -52,11 +50,11 @@ public class StudentService {
         studentRepository.save(student);
         return studentDTO;
     }
-    public StudentDTO getStudentById(int id) {
+    public StudentDTO getStudentById(long id) {
         return fromStudent(studentRepository.findById(id));
     }
 
-    public void removeStudent(int id) {
+    public void removeStudent(long id) {
         studentRepository.deleteById(id);
     }
 
@@ -83,7 +81,7 @@ public class StudentService {
         return faculty;
     }
 
-    public List<StudentDTO> getStudentsByIdFaculty(int id) {
+    public List<StudentDTO> getStudentsByIdFaculty(long id) {
         List<Student> studentByFacultyId = studentRepository.findStudentByFacultyId(id);
         List<StudentDTO> studentDTOS = new ArrayList<>();
 

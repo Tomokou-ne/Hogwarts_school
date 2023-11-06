@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Integer> {
+public interface StudentRepository extends JpaRepository<Student, Long> {
 
-    Student findById(int id);
+    Student findById(long id);
     List<Student> findByAgeBetween(int min, int max);
 
     Student findStudentByNameIgnoreCase(String name);
 
-    List<Student> findStudentByFacultyId(int id);
+    List<Student> findStudentByFacultyId(long id);
 
     @Query(value = "SELECT AVG(student.age) FROM Student", nativeQuery = true)
     Integer findAVGStudentAge();

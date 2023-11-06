@@ -23,7 +23,7 @@ public class HouseService {
         return fromFaculty(facultyRepository.save(faculty));
     }
 
-    public FacultyDTO getFacultyById(int id) {
+    public FacultyDTO getFacultyById(long id) {
         return fromFaculty(facultyRepository.findById(id));
     }
 
@@ -44,7 +44,7 @@ public class HouseService {
         return facultyDTOS;
     }
 
-    public void removeFaculty(int id) {
+    public void removeFaculty(long id) {
         facultyRepository.deleteById(id);
     }
 }
