@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface FacultyRepository extends JpaRepository<Faculty, Integer> {
-    Faculty findById(int id);
+public interface FacultyRepository extends JpaRepository<Faculty, Long> {
+    Faculty findById(long id);
 
     List<Faculty> findByColorIgnoreCase(String color);
 
