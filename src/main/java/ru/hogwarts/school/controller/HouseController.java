@@ -20,7 +20,7 @@ public class HouseController {
     }
 
     @GetMapping("{id}")
-    public FacultyDTO getFaculty(@PathVariable int id) {
+    public FacultyDTO getFaculty(@PathVariable long id) {
         return houseService.getFacultyById(id);
     }
 
@@ -35,12 +35,12 @@ public class HouseController {
     }
 
     @PutMapping("/{id}")
-    public FacultyDTO updateFaculty(@PathVariable("id") int id, @RequestBody FacultyDTO dto) {
+    public FacultyDTO updateFaculty(@PathVariable("id") long id, @RequestBody FacultyDTO dto) {
         return houseService.updateFaculty(dto);
     }
 
     @DeleteMapping("/{id}")
-    public void removeFaculty(@PathVariable("id") int id) {
+    public void removeFaculty(@PathVariable("id") long id) {
         houseService.removeFaculty(id);
     }
 }

@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +23,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 @Service
 @Transactional
 public class AvatarService {
+    private static final Logger logger = LoggerFactory.getLogger(AvatarService.class);
 
     @Value("${application.avatars.folder}")
     private String avatarDirectory;
@@ -33,7 +36,8 @@ public class AvatarService {
         this.avatarRepository = avatarRepository;
     }
 
-    public void uploadAvatar(int studentId, MultipartFile avatarFile) throws IOException {
+    public void uploadAvatar(long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("Вызов метода для загрузки аватара {}", studentId, avatarFile);
         StudentDTO studentDTO = studentService.getStudentById(studentId);
         Student student = studentService.toStudent(studentDTO);
 
@@ -60,6 +64,7 @@ public class AvatarService {
     }
 
     private byte[] generateAvatarPreview(Path avatarPath) throws IOException {
+        logger.info("Вызов метода для генерации превью аватара по пути к нему {}", avatarPath);
         try (InputStream is = Files.newInputStream(avatarPath);
              BufferedInputStream bis = new BufferedInputStream(is, 1024);
              ByteArrayOutputStream baos = new ByteArrayOutputStream()
@@ -77,7 +82,8 @@ public class AvatarService {
         }
     }
 
-    public Avatar findAvatar(int studentId) {
+    public Avatar findAvatar(long studentId) {
+        logger.info("Вызов метода для поиска аватара по идентификатору студента {}", studentId);
         return avatarRepository.findAvatarByStudentId(studentId).orElse(new Avatar());
     }
 
