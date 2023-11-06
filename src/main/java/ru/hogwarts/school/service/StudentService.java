@@ -1,53 +1,91 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.dto.FacultyDTO;
+import ru.hogwarts.school.dto.StudentDTO;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
+
+import static ru.hogwarts.school.dto.StudentDTO.fromStudent;
+import static ru.hogwarts.school.dto.FacultyDTO.fromFaculty;
 
 @Service
 public class StudentService {
 
     private StudentRepository studentRepository;
+    private FacultyRepository facultyRepository;
 
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
+        this.facultyRepository = facultyRepository;
     }
 
-    //get all students
-    public Collection<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public Student toStudent(StudentDTO studentDTO) {
+        return new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAge(),
+                facultyRepository.findById(Math.toIntExact(studentDTO.getFacultyId())));
     }
 
-    //add new student to hashmap
-    public Student addStudent (Student student) {
-        return studentRepository.save(student);
+    public Collection<StudentDTO> getAllStudents() {
+        List<Student> students = studentRepository.findAll();
+        List<StudentDTO> studentDTOs = new ArrayList<>();
+
+        for (Student student : students) {
+            StudentDTO studentDTO = fromStudent(student);
+            studentDTOs.add(studentDTO);
+        }
+        return studentDTOs;
     }
 
-    //read object from hashmap
-    public Optional<Student> getStudentById(long id) {
-        return studentRepository.findById(id);
+    public StudentDTO addStudent (StudentDTO studentDTO) {
+        Student student = toStudent(studentDTO);
+        studentRepository.save(student);
+        return studentDTO;
+    }
+    public StudentDTO getStudentById(int id) {
+        return fromStudent(studentRepository.findById(id));
     }
 
-    //student expulsion
-    public void removeStudent(long id) {
+    public void removeStudent(int id) {
         studentRepository.deleteById(id);
     }
 
-    //update student-information
-    public Student updateStudent(Student student) {
-        Optional<Student> findStudent = getStudentById(student.getId());
-        if (findStudent == null) {
-            throw new RuntimeException("Student not found");
-        }
-        return studentRepository.save(student);
+    public StudentDTO updateStudent(StudentDTO dto) {
+        Student student = toStudent(dto);
+        studentRepository.save(student);
+        return dto;
     }
 
-    //get students by age
-    public List<Student> getStudentsByAge(int age) {
-        return studentRepository.getAllByAge(age);
+    public List<StudentDTO> findByAgeBetween(int minAge, int maxAge) {
+        List<Student> studentByAgeBetween = studentRepository.findByAgeBetween(minAge, maxAge);
+        List<StudentDTO> studentDTOS = new ArrayList<>();
+
+        for (Student student : studentByAgeBetween) {
+            StudentDTO studentDTO = fromStudent(student);
+            studentDTOS.add(studentDTO);
+        }
+        return studentDTOS;
+    }
+
+    public FacultyDTO findFacultyByStudentName(String studentName) {
+        Student currentStudent = studentRepository.findStudentByNameIgnoreCase(studentName);
+        FacultyDTO faculty = fromFaculty(currentStudent.getFaculty());
+        return faculty;
+    }
+
+    public List<StudentDTO> getStudentsByIdFaculty(int id) {
+        List<Student> studentByFacultyId = studentRepository.findStudentByFacultyId(id);
+        List<StudentDTO> studentDTOS = new ArrayList<>();
+
+        for (Student student : studentByFacultyId) {
+            StudentDTO studentDTO = fromStudent(student);
+            studentDTOS.add(studentDTO);
+        }
+        return studentDTOS;
     }
 }

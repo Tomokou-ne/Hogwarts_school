@@ -1,6 +1,7 @@
 package ru.hogwarts.school.controller;
 
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.dto.FacultyDTO;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.HouseService;
 
@@ -18,33 +19,28 @@ public class HouseController {
         this.houseService = houseService;
     }
 
-    @GetMapping()
-    public Collection<Faculty> getAllFaculties() {
-        return houseService.getAllFaculties();
-    }
-
     @GetMapping("{id}")
-    public Optional<Faculty> getFaculty(@PathVariable Integer id) {
+    public FacultyDTO getFaculty(@PathVariable int id) {
         return houseService.getFacultyById(id);
     }
 
     @GetMapping("{color}")
-    public List<Faculty> getFacultiesByColor(@PathVariable("color") String color) {
-        return houseService.getFacultiesByColor(color);
+    public List<FacultyDTO> getFacultiesByColor(@PathVariable("color") String color) {
+        return houseService.getFacultyByColor(color);
     }
 
     @PostMapping()
-    public Faculty addFaculty(@RequestBody Faculty faculty) {
-        return houseService.addFaculty(faculty);
+    public FacultyDTO addFaculty(@RequestBody FacultyDTO dto) {
+        return houseService.addFaculty(dto);
     }
 
     @PutMapping("/{id}")
-    public Faculty updateFaculty(@PathVariable("id") long id, @RequestBody Faculty faculty) {
-        return houseService.updateFaculty(faculty);
+    public FacultyDTO updateFaculty(@PathVariable("id") int id, @RequestBody FacultyDTO dto) {
+        return houseService.updateFaculty(dto);
     }
 
     @DeleteMapping("/{id}")
-    public void removeFaculty(@PathVariable("id") long id) {
+    public void removeFaculty(@PathVariable("id") int id) {
         houseService.removeFaculty(id);
     }
 }

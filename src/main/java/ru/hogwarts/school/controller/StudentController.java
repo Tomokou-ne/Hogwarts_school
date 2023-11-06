@@ -1,12 +1,13 @@
 package ru.hogwarts.school.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.dto.FacultyDTO;
+import ru.hogwarts.school.dto.StudentDTO;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/student")
@@ -18,34 +19,42 @@ public class StudentController {
     }
 
     @GetMapping()
-    public Collection<Student> getAllFaculties() {
+    public Collection<StudentDTO> getAllFaculties() {
         return studentService.getAllStudents();
     }
 
     @GetMapping("{id}")
-    public Optional<Student> getStudent(@PathVariable Integer id) {
+    public StudentDTO getStudent(@PathVariable Integer id) {
         return studentService.getStudentById(id);
     }
 
-    @GetMapping("{age}")
-    public List<Student> getStudentsByAge(@PathVariable("age") int age) {
-        return this.studentService.getStudentsByAge(age);
-    }
-
     @PostMapping()
-    public Student addStudent(@RequestBody Student Student) {
-        return studentService.addStudent(Student);
+    public StudentDTO addStudent(@RequestBody StudentDTO dto) {
+        return studentService.addStudent(dto);
     }
 
     @PutMapping("/{id}")
-    public Student updateStudent(@PathVariable("id") long id, @RequestBody Student student) {
-        return studentService.updateStudent(student);
+    public StudentDTO updateStudent(@PathVariable("id") int id, @RequestBody StudentDTO dto) {
+        return studentService.updateStudent(dto);
     }
 
     @DeleteMapping("/{id}")
-    public void removeStudent(@PathVariable("id") long id) {
+    public void removeStudent(@PathVariable("id") int id) {
         studentService.removeStudent(id);
     }
 
+    @GetMapping()
+    public List<StudentDTO> findByAgeBetween(int minAge, int maxAge) {
+        return studentService.findByAgeBetween(minAge, maxAge);
+    }
 
+    @GetMapping("/{name}")
+    public FacultyDTO findStudentFaculty(@PathVariable String name) {
+        return studentService.findFacultyByStudentName(name);
+    }
+
+    @GetMapping("/getStudentsByFaculty")
+    public List<StudentDTO> getStudentsByIdFaculty(int id) {
+        return studentService.getStudentsByIdFaculty(id);
+    }
 }
