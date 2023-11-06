@@ -100,4 +100,8 @@ public class StudentService {
         return studentRepository.findYoungerStudents();
     }
 
+    public Integer getAllStudentsCount() {
+        return studentRepository.getAllStudentsCount();
+    }
+
 }

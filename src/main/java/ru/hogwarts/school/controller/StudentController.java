@@ -67,4 +67,7 @@ public class StudentController {
         return studentService.findYoungerStudents();
     }
 
+    @GetMapping("/getAllStudentsCount")
+    public Integer getStudentsCount() {return studentService.getAllStudentsCount();}
+
 }
