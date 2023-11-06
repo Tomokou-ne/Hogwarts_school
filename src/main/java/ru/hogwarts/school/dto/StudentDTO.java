@@ -16,6 +16,19 @@ public class StudentDTO {
     private int age;
     private long facultyId;
 
+    public StudentDTO(Long id, String name, int age, long facultyId) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.facultyId = facultyId;
+    }
+
+    public StudentDTO(Long id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
     public static StudentDTO fromStudent(Student student) {
         StudentDTO dto = new StudentDTO();
         dto.setId(student.getId());
@@ -25,4 +38,7 @@ public class StudentDTO {
         return dto;
     }
 
+    public String toString(StudentDTO student) {
+        return student.id + " " + student.name + " " + student.age + " " + student.facultyId;
+    }
 }

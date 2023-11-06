@@ -13,8 +13,8 @@ import ru.hogwarts.school.repository.StudentRepository;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ru.hogwarts.school.dto.StudentDTO.fromStudent;
 import static ru.hogwarts.school.dto.FacultyDTO.fromFaculty;
+import static ru.hogwarts.school.dto.StudentDTO.fromStudent;
 
 @Service
 public class StudentService {
