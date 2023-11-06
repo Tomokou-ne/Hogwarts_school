@@ -6,7 +6,6 @@ import ru.hogwarts.school.dto.StudentDTO;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
-import java.util.Collection;
 import java.util.List;
 
 @RestController
@@ -16,11 +15,6 @@ public class StudentController {
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
-    }
-
-    @GetMapping()
-    public Collection<StudentDTO> getAllFaculties() {
-        return studentService.getAllStudents();
     }
 
     @GetMapping("{id}")
@@ -54,8 +48,8 @@ public class StudentController {
     }
 
     @GetMapping("/getAllStudents")
-    public List<StudentDTO> getAllStudents() {
-        return studentService.getAllStudents();
+    public List<StudentDTO> getAllStudents(@RequestParam("page") Integer pageNumber, @RequestParam("size") Integer pageSize) {
+        return studentService.getAllStudents(pageNumber, pageSize);
     }
 
     @GetMapping("/getStudentsByFaculty")
