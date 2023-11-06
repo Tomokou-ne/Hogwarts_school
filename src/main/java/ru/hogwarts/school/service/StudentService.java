@@ -31,7 +31,7 @@ public class StudentService {
                 facultyRepository.findById(Math.toIntExact(studentDTO.getFacultyId())));
     }
 
-    public Collection<StudentDTO> getAllStudents() {
+    public List<StudentDTO> getAllStudents() {
         List<Student> students = studentRepository.findAll();
         List<StudentDTO> studentDTOs = new ArrayList<>();
 
@@ -88,4 +88,13 @@ public class StudentService {
         }
         return studentDTOS;
     }
+
+    public Integer findAVGStudentAge() {
+        return studentRepository.findAVGStudentAge();
+    }
+
+    public List<Student> findYoungerStudents() {
+        return studentRepository.findYoungerStudents();
+    }
+
 }

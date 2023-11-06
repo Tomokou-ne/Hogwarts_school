@@ -3,7 +3,7 @@ package ru.hogwarts.school.controller;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.dto.FacultyDTO;
 import ru.hogwarts.school.dto.StudentDTO;
-import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
@@ -53,8 +53,24 @@ public class StudentController {
         return studentService.findFacultyByStudentName(name);
     }
 
+    @GetMapping("/getAllStudents")
+    public List<StudentDTO> getAllStudents() {
+        return studentService.getAllStudents();
+    }
+
     @GetMapping("/getStudentsByFaculty")
     public List<StudentDTO> getStudentsByIdFaculty(int id) {
         return studentService.getStudentsByIdFaculty(id);
     }
+
+    @GetMapping("/findAVGStudentAge")
+    public Integer findAVGStudentAge() {
+        return studentService.findAVGStudentAge();
+    }
+
+    @GetMapping("/findYoungerStudents")
+    public List<Student> findYoungerStudents() {
+        return studentService.findYoungerStudents();
+    }
+
 }
