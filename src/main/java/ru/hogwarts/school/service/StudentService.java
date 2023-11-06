@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.dto.FacultyDTO;
 import ru.hogwarts.school.dto.StudentDTO;
@@ -31,7 +32,11 @@ public class StudentService {
                 facultyRepository.findById(Math.toIntExact(studentDTO.getFacultyId())));
     }
 
-    public Collection<StudentDTO> getAllStudents() {
+    public List<StudentDTO> getAllStudents(Integer pageNumber, Integer pageSize) {
+        if (pageSize > 50 || pageSize <= 0) {
+            pageSize = 50;
+        }
+        PageRequest pageRequest = PageRequest.of(pageNumber - 1, pageSize);
         List<Student> students = studentRepository.findAll();
         List<StudentDTO> studentDTOs = new ArrayList<>();
 
@@ -88,4 +93,13 @@ public class StudentService {
         }
         return studentDTOS;
     }
+
+    public Integer findAVGStudentAge() {
+        return studentRepository.findAVGStudentAge();
+    }
+
+    public List<Student> findYoungerStudents() {
+        return studentRepository.findYoungerStudents();
+    }
+
 }
