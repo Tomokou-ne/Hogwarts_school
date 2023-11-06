@@ -33,7 +33,7 @@ public class AvatarService {
         this.avatarRepository = avatarRepository;
     }
 
-    public void uploadAvatar(int studentId, MultipartFile avatarFile) throws IOException {
+    public void uploadAvatar(long studentId, MultipartFile avatarFile) throws IOException {
         StudentDTO studentDTO = studentService.getStudentById(studentId);
         Student student = studentService.toStudent(studentDTO);
 
@@ -77,7 +77,7 @@ public class AvatarService {
         }
     }
 
-    public Avatar findAvatar(int studentId) {
+    public Avatar findAvatar(long studentId) {
         return avatarRepository.findAvatarByStudentId(studentId).orElse(new Avatar());
     }
 

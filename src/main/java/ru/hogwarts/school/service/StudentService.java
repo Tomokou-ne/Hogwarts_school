@@ -29,7 +29,7 @@ public class StudentService {
 
     public Student toStudent(StudentDTO studentDTO) {
         return new Student(studentDTO.getId(), studentDTO.getName(), studentDTO.getAge(),
-                facultyRepository.findById(Math.toIntExact(studentDTO.getFacultyId())));
+                facultyRepository.findById(studentDTO.getFacultyId()));
     }
 
     public List<StudentDTO> getAllStudents(Integer pageNumber, Integer pageSize) {
@@ -52,11 +52,11 @@ public class StudentService {
         studentRepository.save(student);
         return studentDTO;
     }
-    public StudentDTO getStudentById(int id) {
+    public StudentDTO getStudentById(long id) {
         return fromStudent(studentRepository.findById(id));
     }
 
-    public void removeStudent(int id) {
+    public void removeStudent(long id) {
         studentRepository.deleteById(id);
     }
 
@@ -83,7 +83,7 @@ public class StudentService {
         return faculty;
     }
 
-    public List<StudentDTO> getStudentsByIdFaculty(int id) {
+    public List<StudentDTO> getStudentsByIdFaculty(long id) {
         List<Student> studentByFacultyId = studentRepository.findStudentByFacultyId(id);
         List<StudentDTO> studentDTOS = new ArrayList<>();
 
