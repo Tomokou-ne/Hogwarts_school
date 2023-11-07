@@ -18,7 +18,7 @@ public class InfoController {
     }
 
 
-    @GetMapping("/appInfo")
+    @GetMapping()
     public ResponseEntity<AppInfoDTO> getAppInfo() {
         AppInfoDTO appInfo = appInfoService.getAppInfo();
         return ResponseEntity.ok(appInfo);
