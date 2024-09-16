@@ -6,6 +6,8 @@ import ru.hogwarts.school.service.HouseService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/faculty")
@@ -23,7 +25,7 @@ public class HouseController {
     }
 
     @GetMapping("{id}")
-    public Faculty getFaculty(@PathVariable Integer id) {
+    public Optional<Faculty> getFaculty(@PathVariable Integer id) {
         return houseService.getFacultyById(id);
     }
 
@@ -39,11 +41,11 @@ public class HouseController {
 
     @PutMapping("/{id}")
     public Faculty updateFaculty(@PathVariable("id") long id, @RequestBody Faculty faculty) {
-        return houseService.updateFaculty(id, faculty);
+        return houseService.updateFaculty(faculty);
     }
 
     @DeleteMapping("/{id}")
-    public Faculty removeFaculty(@PathVariable("id") long id) {
-        return houseService.removeFaculty(id);
+    public void removeFaculty(@PathVariable("id") long id) {
+        houseService.removeFaculty(id);
     }
 }

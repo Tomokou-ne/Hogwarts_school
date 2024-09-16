@@ -2,57 +2,50 @@ package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class HouseService {
 
-    private long counter = 0;
+    private FacultyRepository facultyRepository;
 
-    private final Map<Long, Faculty> facultyMap = new HashMap<>();
+    public HouseService(FacultyRepository facultyRepository) {
+        this.facultyRepository = facultyRepository;
+    }
 
     //get all faculties
     public Collection<Faculty> getAllFaculties() {
-        return facultyMap.values();
+        return facultyRepository.findAll();
     }
 
     //add new faculty to hashmap
     public Faculty addFaculty (Faculty faculty) {
-        facultyMap.put(this.counter++, faculty);
-        return faculty;
+        return facultyRepository.save(faculty);
     }
 
     //read object from hashmap
-    public Faculty getFacultyById(long id) {
-        return facultyMap.get(id);
+    public Optional<Faculty> getFacultyById(long id) {
+        return facultyRepository.findById(id);
+
     }
 
     //delete object
-    public Faculty removeFaculty(long id) {
-        if (this.facultyMap.containsKey(id)) {
-            return this.facultyMap.remove(id);
-        }
-        return null;
+    public void removeFaculty(long id) {
+        facultyRepository.deleteById(id);
     }
 
     //update faculty-information
-    public Faculty updateFaculty (long id, Faculty faculty) {
-        if (facultyMap.containsKey(id)) {
-            return facultyMap.put(id, faculty);
+    public Faculty updateFaculty (Faculty faculty) {
+        Optional<Faculty> findFaculty = getFacultyById(faculty.getId());
+        if (findFaculty == null) {
+            throw new RuntimeException("Faculty not found");
         }
-        return null;
+        return facultyRepository.save(faculty);
     }
 
     //get faculties by color
     public List<Faculty> getFacultiesByColor(String color) {
-        return facultyMap.values()
-                .stream()
-                .filter(faculty -> faculty.getColor().equals(color))
-                .toList();
-    }
-
+        return facultyRepository.findByColor(color);
 }
