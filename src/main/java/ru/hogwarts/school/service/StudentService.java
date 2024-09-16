@@ -13,6 +13,7 @@ public class StudentService {
 
     private StudentRepository studentRepository;
 
+
     public StudentService(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
@@ -30,7 +31,6 @@ public class StudentService {
     //read object from hashmap
     public Optional<Student> getStudentById(long id) {
         return studentRepository.findById(id);
-    }
 
     //student expulsion
     public void removeStudent(long id) {

@@ -28,6 +28,7 @@ public class HouseService {
     //read object from hashmap
     public Optional<Faculty> getFacultyById(long id) {
         return facultyRepository.findById(id);
+
     }
 
     //delete object
@@ -47,6 +48,4 @@ public class HouseService {
     //get faculties by color
     public List<Faculty> getFacultiesByColor(String color) {
         return facultyRepository.findByColor(color);
-    }
-
 }
